@@ -1,0 +1,27 @@
+# ตัวอย่าง data.yaml สำหรับ YOLO Training
+# Example data.yaml for YOLO Training
+
+# Dataset path (absolute หรือ relative to this file)
+path: /path/to/dataset  # แก้ไขให้ตรงกับตำแหน่งจริง
+
+# Train, validation, test sets (relative to 'path')
+train: train/images
+val: val/images
+test: test/images  # optional
+
+# Number of classes
+nc: 3
+
+# Class names
+names:
+  0: person
+  1: car
+  2: bicycle
+
+# Optional: Download script (ถ้าต้องการ download dataset อัตโนมัติ)
+# download: |
+#   import os
+#   from pathlib import Path
+#   
+#   # Your download script here
+#   print("Downloading dataset...")
