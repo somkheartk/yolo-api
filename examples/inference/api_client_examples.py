@@ -144,16 +144,17 @@ class AsyncYOLOAPIClient:
             Dictionary ของผลลัพธ์
         """
         data = aiohttp.FormData()
-        data.add_field('file', open(image_path, 'rb'))
-        data.add_field('conf', str(conf))
-        data.add_field('iou', str(iou))
-        
-        async with session.post(
-            f"{self.base_url}/detect",
-            data=data
-        ) as response:
-            response.raise_for_status()
-            return await response.json()
+        with open(image_path, 'rb') as f:
+            data.add_field('file', f)
+            data.add_field('conf', str(conf))
+            data.add_field('iou', str(iou))
+            
+            async with session.post(
+                f"{self.base_url}/detect",
+                data=data
+            ) as response:
+                response.raise_for_status()
+                return await response.json()
     
     async def detect_batch(
         self,

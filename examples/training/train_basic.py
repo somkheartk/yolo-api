@@ -16,7 +16,7 @@ import torch
 
 def main():
     # ตรวจสอบ GPU
-    if torch.cuda.is_available():
+    if torch.cuda.is_available() and torch.cuda.device_count() > 0:
         print(f"✓ GPU available: {torch.cuda.get_device_name(0)}")
         device = 0
     else:

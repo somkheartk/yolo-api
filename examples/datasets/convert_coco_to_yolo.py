@@ -76,6 +76,9 @@ def convert_coco_to_yolo(coco_dir, output_dir, split='train'):
     images = {img['id']: img for img in coco_data['images']}
     categories = {cat['id']: cat for cat in coco_data['categories']}
     
+    # สร้าง category ID mapping (COCO IDs ไม่ต่อเนื่อง -> YOLO IDs ต่อเนื่อง)
+    coco_to_yolo_id = {cat_id: idx for idx, cat_id in enumerate(sorted(categories.keys()))}
+    
     # จัดกลุ่ม annotations ตาม image_id
     annotations_by_image = {}
     for ann in coco_data['annotations']:
@@ -117,9 +120,9 @@ def convert_coco_to_yolo(coco_dir, output_dir, split='train'):
                     )
                     
                     # เขียน label (class_id x_center y_center width height)
-                    # YOLO ใช้ class_id เริ่มจาก 0
-                    class_id = category_id - 1  # COCO เริ่มจาก 1
-                    f.write(f"{class_id} {' '.join(map(str, yolo_bbox))}\n")
+                    # ใช้ mapping เพื่อให้ได้ ID ที่ต่อเนื่อง
+                    yolo_class_id = coco_to_yolo_id[category_id]
+                    f.write(f"{yolo_class_id} {' '.join(map(str, yolo_bbox))}\n")
     
     # สร้าง data.yaml
     data_yaml = output_dir / 'data.yaml'
@@ -129,8 +132,9 @@ def convert_coco_to_yolo(coco_dir, output_dir, split='train'):
         f.write(f"val: val/images\n\n")
         f.write(f"nc: {len(categories)}\n")
         f.write(f"names:\n")
-        for cat_id, cat in sorted(categories.items()):
-            f.write(f"  {cat_id - 1}: {cat['name']}\n")
+        for cat_id in sorted(categories.keys()):
+            yolo_id = coco_to_yolo_id[cat_id]
+            f.write(f"  {yolo_id}: {categories[cat_id]['name']}\n")
     
     print(f"\nConversion completed!")
     print(f"Output directory: {output_dir}")

@@ -35,7 +35,7 @@ def train_model(args):
         args: Command line arguments
     """
     # ตรวจสอบ GPU
-    if torch.cuda.is_available():
+    if torch.cuda.is_available() and torch.cuda.device_count() > 0:
         print(f"✓ GPU available: {torch.cuda.get_device_name(0)}")
         device = args.device if args.device != 'auto' else 0
     else:
@@ -127,7 +127,19 @@ def train_model(args):
     print("TRAINING STARTED")
     print("="*60 + "\n")
     
-    results = model.train(**train_params)
+    try:
+        results = model.train(**train_params)
+    except Exception as e:
+        print("\n" + "="*60)
+        print("TRAINING FAILED")
+        print("="*60)
+        print(f"Error: {e}")
+        print("\nPlease check:")
+        print("  1. Dataset path and data.yaml are correct")
+        print("  2. Images and labels exist")
+        print("  3. Sufficient disk space and memory")
+        print("  4. CUDA/GPU drivers if using GPU")
+        raise
     
     print("\n" + "="*60)
     print("TRAINING COMPLETED")

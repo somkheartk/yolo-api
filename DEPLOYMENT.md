@@ -84,7 +84,7 @@ CPU: 1 vCPU
 RAM: 2 GB
 Storage: 50 GB SSD
 Transfer: 2 TB
-ราคา: $12/month
+ราคา: $12/month (อาจมีการเปลี่ยนแปลง - ตรวจสอบราคาปัจจุบันที่ digitalocean.com)
 ```
 
 **สำหรับ Production (แนะนำ):**
@@ -94,7 +94,7 @@ CPU: 2 vCPUs
 RAM: 4 GB
 Storage: 80 GB SSD
 Transfer: 4 TB
-ราคา: $24/month
+ราคา: $24/month (อาจมีการเปลี่ยนแปลง - ตรวจสอบราคาปัจจุบันที่ digitalocean.com)
 ```
 
 **สำหรับ High Traffic:**
@@ -103,7 +103,7 @@ CPU-Optimized
 CPU: 4 vCPUs
 RAM: 8 GB
 Storage: 100 GB SSD
-ราคา: $48/month
+ราคา: $48/month (อาจมีการเปลี่ยนแปลง - ตรวจสอบราคาปัจจุบันที่ digitalocean.com)
 ```
 
 5. **เลือก Data Center Region:**
